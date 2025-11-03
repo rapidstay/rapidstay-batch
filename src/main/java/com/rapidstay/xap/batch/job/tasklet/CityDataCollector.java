@@ -2,9 +2,9 @@ package com.rapidstay.xap.batch.job.tasklet;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rapidstay.xap.common.dto.CityDTO;
-import com.rapidstay.xap.common.entity.CityInsight;
-import com.rapidstay.xap.common.repository.CityInsightRepository;
+import com.rapidstay.xap.batch.common.dto.CityDTO;
+import com.rapidstay.xap.batch.common.entity.CityInsight;
+import com.rapidstay.xap.batch.common.repository.CityInsightRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
