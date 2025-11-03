@@ -10,10 +10,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 @ComponentScan(basePackages = {
         "com.rapidstay.xap.batch",
-        "com.rapidstay.xap.common"   // ✅ common 모듈(@Service, @Configuration 등 포함)
+        "com.rapidstay.xap.batch.common"
 })
-@EntityScan(basePackages = "com.rapidstay.xap.batch.common.entity")  // ✅ Entity 인식
-@EnableJpaRepositories(basePackages = "com.rapidstay.xap.batch.common.repository")  // ✅ Repository 인식
+@EntityScan(basePackages = "com.rapidstay.xap.batch.common.entity")
+@EnableJpaRepositories(basePackages = "com.rapidstay.xap.batch.common.repository")
 @EnableBatchProcessing
 public class BatchApplication {
     public static void main(String[] args) {

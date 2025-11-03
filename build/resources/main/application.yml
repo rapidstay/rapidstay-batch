@@ -1,12 +1,23 @@
 spring:
   application:
     name: rapidstay-batch
+  profiles:
+    active: local  # 기본은 local, 운영에선 SPRING_PROFILES_ACTIVE=prod 로 덮어쓰기
+
+# ======================================================
+# 🧩 Local (macOS 개발/테스트)
+# ======================================================
+---
+spring:
+  config:
+    activate:
+      on-profile: local
 
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:file:/Users/kim-inho/rapidstay-batch-db;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE
-    username: sa
-    password:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://dpg-d44bbu3ipnbc73d2n6q0-a.oregon-postgres.render.com:5432/rapidstay_db
+    username: redshine75
+    password: EKj5HOzXrKDY91Y4a5F4rQzDyyL5QWpR
 
   jpa:
     hibernate:
@@ -20,18 +31,50 @@ spring:
     jdbc:
       initialize-schema: always
     job:
-      enabled: false
-
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
+      enabled: false  # 로컬은 수동 실행
 
 server:
   port: 8082
 
 opentripmap:
-  apikey: ""   # 있으면 채워넣기 (예: abc123)
-
+  apikey: ""   # 테스트 시 필요하면 추가
 nominatim:
-  email: "dev@rapidstay.link" # Nominatim 정책상 user-agent에 이메일 표기 권장
+  email: "dev@rapidstay.link"
+
+
+# ======================================================
+# 🚀 Prod (Render / 운영)
+# ======================================================
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://dpg-d44bbu3ipnbc73d2n6q0-a.oregon-postgres.render.com:5432/rapidstay_db
+    username: redshine75
+    password: EKj5HOzXrKDY91Y4a5F4rQzDyyL5QWpR
+
+  jpa:
+    hibernate:
+      ddl-auto: none     # 운영은 스키마 자동 수정 방지
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+
+  batch:
+    jdbc:
+      initialize-schema: never
+    job:
+      enabled: true      # 운영에서만 스케줄 실행
+
+server:
+  port: 8082
+
+opentripmap:
+  apikey: ${OPENTRIPMAP_API_KEY:}
+nominatim:
+  email: "prod@rapidstay.link"

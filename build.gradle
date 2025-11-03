@@ -12,18 +12,24 @@ repositories {
 }
 
 dependencies {
+    // --- ✅ 공통 모듈 (common.jar 직접 포함 가능) ---
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    // --- Spring 기본 ---
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-batch'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-    runtimeOnly 'com.h2database:h2'
 
+    // --- ✅ Database (PostgreSQL) ---
+    implementation 'org.postgresql:postgresql:42.7.3'
+
+    // --- Lombok ---
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
+    // --- Test ---
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.batch:spring-batch-test'
 }
