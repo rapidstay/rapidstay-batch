@@ -26,6 +26,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        connection.isolation: 2  # READ COMMITTED (동시성 충돌 완화)
     open-in-view: false
     defer-datasource-initialization: true
 
@@ -37,9 +38,9 @@ spring:
 
   batch:
     jdbc:
-      initialize-schema: always  # 로컬에서는 매번 스키마 확인
+      initialize-schema: always
     job:
-      enabled: false             # 수동 실행 (API 호출 시 트리거)
+      enabled: false
 
 server:
   port: 8083
@@ -86,13 +87,16 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        connection.isolation: 2  # READ COMMITTED
     open-in-view: false
     defer-datasource-initialization: true
 
   data:
     redis:
-      url: rediss://red-d40ub0k9c44c73cdgu60:eCCiLBqjN0WLXOQrEzDZahZ3dhTm1PkY@oregon-keyvalue.render.com:6379
+      url: redis://red-d40ub0k9c44c73cdgu60:6379  # Render 내부 Redis
       timeout: 10000
+      ssl:
+        enabled: false
 
   batch:
     jdbc:
@@ -124,7 +128,7 @@ management:
 
 
 # ======================================================
-# 🚀 Prod (운영 / Upstash Redis)
+# 🚀 Prod (운영 / Render Redis)
 # ======================================================
 ---
 spring:
@@ -145,12 +149,13 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        connection.isolation: 2  # READ COMMITTED
     open-in-view: false
     defer-datasource-initialization: false
 
   data:
     redis:
-      url: rediss://red-d40ub0k9c44c73cdgu60:eCCiLBqjN0WLXOQrEzDZahZ3dhTm1PkY@oregon-keyvalue.render.com:6379
+      url: redis://red-d40ub0k9c44c73cdgu60:6379  # Render 내부 Redis
       timeout: 10000
       ssl:
         enabled: false
@@ -159,7 +164,7 @@ spring:
     jdbc:
       initialize-schema: never
     job:
-      enabled: true  # 운영은 자동 스케줄링 실행
+      enabled: true
 
 server:
   port: 8083
