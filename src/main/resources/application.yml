@@ -35,6 +35,7 @@ spring:
       host: localhost
       port: 6379
       timeout: 2000
+      ssl: false
 
   batch:
     jdbc:
@@ -93,10 +94,13 @@ spring:
 
   data:
     redis:
-      url: redis://red-d40ub0k9c44c73cdgu60:6379  # Render 내부 Redis
+      host: oregon-keyvalue.render.com
+      port: 6379
+      username: red-d40ub0k9c44c73cdgu60
+      password: eCCiLBqjN0WLXOQrEzDZahZ3dhTm1PkY
       timeout: 10000
-      ssl:
-        enabled: false
+      connect-timeout: 10000
+      ssl: true
 
   batch:
     jdbc:
@@ -155,10 +159,13 @@ spring:
 
   data:
     redis:
-      url: redis://red-d40ub0k9c44c73cdgu60:6379  # Render 내부 Redis
+      host: oregon-keyvalue.render.com
+      port: 6379
+      username: red-d40ub0k9c44c73cdgu60
+      password: eCCiLBqjN0WLXOQrEzDZahZ3dhTm1PkY
       timeout: 10000
-      ssl:
-        enabled: false
+      connect-timeout: 10000
+      ssl: true
 
   batch:
     jdbc:
