@@ -30,12 +30,11 @@ spring:
     open-in-view: false
     defer-datasource-initialization: true
 
-  data:
-    redis:
-      host: localhost
-      port: 6379
-      timeout: 2000
-      ssl: false
+  redis:
+    host: localhost
+    port: 6379
+    timeout: 2s
+    ssl: false
 
   batch:
     jdbc:
@@ -92,15 +91,14 @@ spring:
     open-in-view: false
     defer-datasource-initialization: true
 
-  data:
-    redis:
-      host: oregon-keyvalue.render.com
-      port: 6379
-      username: red-d40ub0k9c44c73cdgu60
-      password: eCCiLBqjN0WLXOQrEzDZahZ3dhTm1PkY
-      timeout: 10000
-      connect-timeout: 10000
-      ssl: true
+  redis:
+    host: oregon-keyvalue.render.com
+    port: 6379
+    username: red-d40ub0k9c44c73cdgu60
+    password: eCCiLBqjN0WLXOQrEzDZahZ3dhTm1PkY
+    ssl: true
+    timeout: 10s
+    connect-timeout: 10s
 
   batch:
     jdbc:
@@ -111,7 +109,7 @@ spring:
 server:
   port: 8083
 
-opentripmap:
+opentritemap:
   apikey: ""
 nominatim:
   email: "dev@rapidstay.link"
@@ -157,15 +155,14 @@ spring:
     open-in-view: false
     defer-datasource-initialization: false
 
-  data:
-    redis:
-      host: oregon-keyvalue.render.com
-      port: 6379
-      username: red-d40ub0k9c44c73cdgu60
-      password: eCCiLBqjN0WLXOQrEzDZahZ3dhTm1PkY
-      timeout: 10000
-      connect-timeout: 10000
-      ssl: true
+  redis:
+    host: oregon-keyvalue.render.com
+    port: 6379
+    username: red-d40ub0k9c44c73cdgu60
+    password: eCCiLBqjN0WLXOQrEzDZahZ3dhTm1PkY
+    ssl: true
+    timeout: 10s
+    connect-timeout: 10s
 
   batch:
     jdbc:
