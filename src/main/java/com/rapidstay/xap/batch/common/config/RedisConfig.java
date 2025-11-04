@@ -12,6 +12,7 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
@@ -63,7 +64,11 @@ public class RedisConfig {
     public RedisTemplate<String, CityDTO> cityRedisTemplate(RedisConnectionFactory connectionFactory) {
         RedisTemplate<String, CityDTO> template = new RedisTemplate<>();
         template.setConnectionFactory(connectionFactory);
-        template.setDefaultSerializer(new GenericJackson2JsonRedisSerializer());
+
+        Jackson2JsonRedisSerializer<CityDTO> serializer = new Jackson2JsonRedisSerializer<>(CityDTO.class);
+        template.setKeySerializer(new StringRedisSerializer());
+        template.setValueSerializer(serializer);
+        template.afterPropertiesSet();
         return template;
     }
 
