@@ -2,10 +2,10 @@ spring:
   application:
     name: rapidstay-batch
   profiles:
-    active: local  # 기본은 local, 운영에선 SPRING_PROFILES_ACTIVE=prod 로 덮어쓰기
+    active: local  # 기본은 local, 서버에선 SPRING_PROFILES_ACTIVE=prod 로 덮어쓰기
 
 # ======================================================
-# 🧩 Local (macOS 개발/테스트)
+# 🧩 Local (개발/테스트)
 # ======================================================
 ---
 spring:
@@ -26,20 +26,36 @@ spring:
     properties:
       hibernate:
         format_sql: true
+    open-in-view: false
+    defer-datasource-initialization: true
 
   batch:
     jdbc:
-      initialize-schema: always
+      initialize-schema: always  # 로컬에선 항상 스키마 확인
     job:
-      enabled: false  # 로컬은 수동 실행
+      enabled: false             # 수동 실행 (API 호출로 트리거)
 
 server:
   port: 8082
 
 opentripmap:
-  apikey: ""   # 테스트 시 필요하면 추가
+  apikey: ""   # 필요 시 수동 입력
 nominatim:
   email: "dev@rapidstay.link"
+
+logging:
+  level:
+    root: INFO
+    com.rapidstay: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
 
 
 # ======================================================
@@ -59,17 +75,19 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: none     # 운영은 스키마 자동 수정 방지
+      ddl-auto: none         # 운영은 스키마 자동 변경 방지
     show-sql: false
     properties:
       hibernate:
         format_sql: true
+    open-in-view: false
+    defer-datasource-initialization: false
 
   batch:
     jdbc:
-      initialize-schema: never
+      initialize-schema: never  # 운영은 수동 초기화
     job:
-      enabled: true      # 운영에서만 스케줄 실행
+      enabled: true             # 스케줄 자동 실행
 
 server:
   port: 8082
@@ -78,3 +96,17 @@ opentripmap:
   apikey: ${OPENTRIPMAP_API_KEY:}
 nominatim:
   email: "prod@rapidstay.link"
+
+logging:
+  level:
+    root: INFO
+    com.rapidstay: INFO
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
