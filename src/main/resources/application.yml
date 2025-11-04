@@ -109,7 +109,7 @@ spring:
 server:
   port: 8083
 
-opentritemap:
+opentripmap:
   apikey: ""
 nominatim:
   email: "dev@rapidstay.link"
@@ -189,5 +189,4 @@ management:
       exposure:
         include: health
   endpoint:
-    health:
-      show-details: never
+    healt
