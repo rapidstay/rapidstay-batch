@@ -2,10 +2,10 @@ spring:
   application:
     name: rapidstay-batch
   profiles:
-    active: local  # 기본은 local, 운영에선 SPRING_PROFILES_ACTIVE=prod 로 덮어쓰기
+    active: local
 
 # ======================================================
-# 🧩 Local (macOS 개발/테스트)
+# 🧩 Local (개발/테스트)
 # ======================================================
 ---
 spring:
@@ -26,24 +26,107 @@ spring:
     properties:
       hibernate:
         format_sql: true
+    open-in-view: false
+    defer-datasource-initialization: true
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 2000
+
+  batch:
+    jdbc:
+      initialize-schema: always  # 로컬에서는 매번 스키마 확인
+    job:
+      enabled: false             # 수동 실행 (API 호출 시 트리거)
+
+server:
+  port: 8083
+
+opentripmap:
+  apikey: ""
+nominatim:
+  email: "dev@rapidstay.link"
+
+logging:
+  level:
+    root: INFO
+    com.rapidstay: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
+
+
+# ======================================================
+# 🚧 Dev (Render / 테스트 서버)
+# ======================================================
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://dpg-d44bbu3ipnbc73d2n6q0-a.oregon-postgres.render.com:5432/rapidstay_db
+    username: redshine75
+    password: EKj5HOzXrKDY91Y4a5F4rQzDyyL5QWpR
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+    defer-datasource-initialization: true
+
+  data:
+    redis:
+      url: rediss://default:AYFNAAIncDJmNWU2NDE2OTJlZWY0NzAwYWU5OTE0NzZmODc2MDNmNnAyMzMxMDE@premium-mongrel-33101.upstash.io:6379
+      timeout: 10000
+      ssl:
+        enabled: true
 
   batch:
     jdbc:
       initialize-schema: always
     job:
-      enabled: false  # 로컬은 수동 실행
+      enabled: false
 
 server:
-  port: 8082
+  port: 8083
 
 opentripmap:
-  apikey: ""   # 테스트 시 필요하면 추가
+  apikey: ""
 nominatim:
   email: "dev@rapidstay.link"
 
+logging:
+  level:
+    root: INFO
+    com.rapidstay: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
+
 
 # ======================================================
-# 🚀 Prod (Render / 운영)
+# 🚀 Prod (운영 / Upstash Redis)
 # ======================================================
 ---
 spring:
@@ -59,22 +142,45 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: none     # 운영은 스키마 자동 수정 방지
+      ddl-auto: none
     show-sql: false
     properties:
       hibernate:
         format_sql: true
+    open-in-view: false
+    defer-datasource-initialization: false
+
+  data:
+    redis:
+      url: rediss://default:AYFNAAIncDJmNWU2NDE2OTJlZWY0NzAwYWU5OTE0NzZmODc2MDNmNnAyMzMxMDE@premium-mongrel-33101.upstash.io:6379
+      timeout: 10000
+      ssl:
+        enabled: true
 
   batch:
     jdbc:
       initialize-schema: never
     job:
-      enabled: true      # 운영에서만 스케줄 실행
+      enabled: true  # 운영은 자동 스케줄링 실행
 
 server:
-  port: 8082
+  port: 8083
 
 opentripmap:
-  apikey: ${OPENTRIPMAP_API_KEY:}
+  apikey: ""
 nominatim:
   email: "prod@rapidstay.link"
+
+logging:
+  level:
+    root: INFO
+    com.rapidstay: INFO
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
