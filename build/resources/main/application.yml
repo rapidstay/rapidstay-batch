@@ -26,15 +26,15 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        connection.isolation: 2  # READ COMMITTED (동시성 충돌 완화)
+        connection.isolation: 2  # READ COMMITTED
     open-in-view: false
     defer-datasource-initialization: true
 
-  redis:
-    host: localhost
-    port: 6379
-    timeout: 2s
-    ssl: false
+  data:
+    redis:
+      url: rediss://red-d40ub0k9c44c73cdgu60:eCCiLBqjN0WLXOQrEzDZahZ3dhTm1PkY@oregon-keyvalue.render.com:6379
+      timeout: 20s
+      connect-timeout: 10s
 
   batch:
     jdbc:
@@ -66,7 +66,7 @@ management:
 
 
 # ======================================================
-# 🚧 Dev (Render / 테스트 서버)
+# 🚧 Dev (Render 내부 / 테스트 서버)
 # ======================================================
 ---
 spring:
@@ -87,18 +87,15 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        connection.isolation: 2  # READ COMMITTED
+        connection.isolation: 2
     open-in-view: false
     defer-datasource-initialization: true
 
-  redis:
-    host: oregon-keyvalue.render.com
-    port: 6379
-    username: red-d40ub0k9c44c73cdgu60
-    password: eCCiLBqjN0WLXOQrEzDZahZ3dhTm1PkY
-    ssl: true
-    timeout: 10s
-    connect-timeout: 10s
+  data:
+    redis:
+      url: redis://red-d40ub0k9c44c73cdgu60:eCCiLBqjN0WLXOQrEzDZahZ3dhTm1PkY@red-d40ub0k9c44c73cdgu60:6379
+      timeout: 20s
+      connect-timeout: 10s
 
   batch:
     jdbc:
@@ -130,7 +127,7 @@ management:
 
 
 # ======================================================
-# 🚀 Prod (운영 / Render Redis)
+# 🚀 Prod (Render 내부 / 운영)
 # ======================================================
 ---
 spring:
@@ -151,18 +148,15 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        connection.isolation: 2  # READ COMMITTED
+        connection.isolation: 2
     open-in-view: false
     defer-datasource-initialization: false
 
-  redis:
-    host: oregon-keyvalue.render.com
-    port: 6379
-    username: red-d40ub0k9c44c73cdgu60
-    password: eCCiLBqjN0WLXOQrEzDZahZ3dhTm1PkY
-    ssl: true
-    timeout: 10s
-    connect-timeout: 10s
+  data:
+    redis:
+      url: redis://red-d40ub0k9c44c73cdgu60:eCCiLBqjN0WLXOQrEzDZahZ3dhTm1PkY@red-d40ub0k9c44c73cdgu60:6379
+      timeout: 20s
+      connect-timeout: 10s
 
   batch:
     jdbc:
@@ -189,4 +183,5 @@ management:
       exposure:
         include: health
   endpoint:
-    healt
+    health:
+      show-details: never
