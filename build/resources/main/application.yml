@@ -51,10 +51,10 @@ nominatim:
   email: "dev@rapidstay.link"
 
 hotelbeds:
-  baseUrl: "https://api.test.hotelbeds.com/hotel-api/1.0"
-  apiKey: "e3e25e4600288ef722d9bcb06e9920af"
-  secret: "32a6c90c47"         # ✅ 이 줄이 핵심!
-  sharedSecret: "32a6c90c47"
+  baseUrl: "https://api.test.hotelbeds.com/hotel-content-api/1.0"
+  apiKey: "568114d7ee66b22f1a0339449f001af6"
+  secret: "b7c7273988"         # ✅ 이 줄이 핵심!
+  sharedSecret: "b7c7273988"
   request-limit: 2
 
 logging:
@@ -100,7 +100,7 @@ spring:
 
   data:
     redis:
-      url: redis://red-d40ub0k9c44c73cdgu60:eCCiLBqjN0WLXOQrEzDZahZ3dhTm1PkY@red-d40ub0k9c44c73cdgu60:6379
+      url: redis://:eCCiLBqjN0WLXOQrEzDZahZ3dhTm1PkY@red-d40ub0k9c44c73cdgu60:6379
       timeout: 20s
       connect-timeout: 10s
 
@@ -167,7 +167,7 @@ spring:
 
   data:
     redis:
-      url: redis://red-d40ub0k9c44c73cdgu60:eCCiLBqjN0WLXOQrEzDZahZ3dhTm1PkY@red-d40ub0k9c44c73cdgu60:6379
+      url: redis://:eCCiLBqjN0WLXOQrEzDZahZ3dhTm1PkY@red-d40ub0k9c44c73cdgu60:6379
       timeout: 20s
       connect-timeout: 10s
 
