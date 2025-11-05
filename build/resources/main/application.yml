@@ -51,7 +51,7 @@ nominatim:
   email: "dev@rapidstay.link"
 
 hotelbeds:
-  baseUrl: "https://api.test.hotelbeds.com/hotel-content-api/1.0"
+  baseUrl: "https://api.test.hotelbeds.com/hotel-api/1.0"
   apiKey: "e3e25e4600288ef722d9bcb06e9920af"
   secret: "32a6c90c47"         # ✅ 이 줄이 핵심!
   sharedSecret: "32a6c90c47"

@@ -1,5 +1,7 @@
 package com.rapidstay.xap.batch.job.hotelbeds;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
@@ -13,14 +15,9 @@ public class HotelbedsAuthUtil {
 
     public static String generateSignature(String apiKey, String secret, long timestamp) {
         try {
-            String message = apiKey + secret + timestamp;
-            Mac hasher = Mac.getInstance("HmacSHA256");
-            hasher.init(new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256"));
-            byte[] hash = hasher.doFinal(message.getBytes(StandardCharsets.UTF_8));
+            String toSign = apiKey + secret + timestamp;
+            return DigestUtils.sha256Hex(toSign);
 
-            Formatter formatter = new Formatter();
-            for (byte b : hash) formatter.format("%02x", b);
-            return formatter.toString();
 
         } catch (Exception e) {
             throw new RuntimeException("❌ Failed to generate Hotelbeds signature", e);
