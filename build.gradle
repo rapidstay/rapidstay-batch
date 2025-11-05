@@ -12,8 +12,6 @@ repositories {
 }
 
 dependencies {
-    // --- ✅ 공통 모듈 (common.jar 직접 포함 가능) ---
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // --- Spring 기본 ---
     implementation 'org.springframework.boot:spring-boot-starter'
@@ -22,7 +20,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-
+    implementation 'commons-codec:commons-codec:1.16.0'
     // --- ✅ Database (PostgreSQL) ---
     implementation 'org.postgresql:postgresql:42.7.3'
 
@@ -47,3 +45,8 @@ sourceSets {
         }
     }
 }
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs += ["-parameters"]
+}
+

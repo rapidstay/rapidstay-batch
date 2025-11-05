@@ -2,7 +2,7 @@ spring:
   application:
     name: rapidstay-batch
   profiles:
-    active: local
+    active: local   # ✅ 기본 활성 프로필 (로컬 실행 시 자동 적용)
 
 # ======================================================
 # 🧩 Local (개발/테스트)
@@ -49,6 +49,13 @@ opentripmap:
   apikey: ""
 nominatim:
   email: "dev@rapidstay.link"
+
+hotelbeds:
+  baseUrl: "https://api.test.hotelbeds.com/hotel-content-api/1.0"
+  apiKey: "e3e25e4600288ef722d9bcb06e9920af"
+  secret: "32a6c90c47"         # ✅ 이 줄이 핵심!
+  sharedSecret: "32a6c90c47"
+  request-limit: 2
 
 logging:
   level:
@@ -111,6 +118,12 @@ opentripmap:
 nominatim:
   email: "dev@rapidstay.link"
 
+hotelbeds:
+  base-url: "https://api.test.hotelbeds.com/hotel-content-api/1.0"
+  api-key: ""
+  secret: ""
+  request-limit: 2
+
 logging:
   level:
     root: INFO
@@ -171,6 +184,12 @@ opentripmap:
   apikey: ""
 nominatim:
   email: "prod@rapidstay.link"
+
+hotelbeds:
+  base-url: "https://api.hotelbeds.com/hotel-content-api/1.0"
+  api-key: ""
+  secret: ""
+  request-limit: 2
 
 logging:
   level:
